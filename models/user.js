@@ -5,14 +5,14 @@ const { hashPassword } = require("../helpers/bcrypt")
 module.exports = (sequelize, DataTypes) => {
     class user extends Model {
         static associate(models) {
-            // this.hasMany(models.category, {
-            //     as: "category",
-            //     foreignKey: "id",    
-            // });
-            // this.hasMany(models.transactionhistory, {
-            //     as: "category",
-            //     foreignKey: "UserId",
-            // });
+            this.hasMany(models.category, {
+                as: "user",
+                foreignKey: "id",
+            });
+            this.hasMany(models.transactionhistory, {
+                as: "users",
+                foreignKey: "UserId",
+            });
         }
     }
     user.init({
@@ -28,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-
+            unique: {
+                args: true,
+                msg: 'Email address already in use. Try another one!'
+            },
             validate: {
                 notEmpty: {
                     args: true,
@@ -37,23 +40,6 @@ module.exports = (sequelize, DataTypes) => {
                 isEmail: {
                     args: true,
                     msg: "email must be valid"
-                },
-                // isUnique: {
-                //     args: true,
-                //     msg: 'Email address already in use!'
-                // },
-
-                isUnique: (value, next) => {
-                    user.findAll({
-                            where: { email: value },
-                            attributes: ['id'],
-                        })
-                        .then((user) => {
-                            if (user.length != 0)
-                                next(new Error("This email has been used, try another one"));
-                            next();
-                        })
-                        .catch((onError) => console.log(onError));
                 },
             }
         },
@@ -119,6 +105,10 @@ module.exports = (sequelize, DataTypes) => {
                     args: true,
                     msg: "balance is required"
                 },
+                isInt: {
+                    args: true,
+                    msg: "balance must be integer"
+                }
             }
         },
     }, {
