@@ -1,6 +1,6 @@
 const User = require("../models/index").user;
 const { comparePassword } = require("../helpers/bcrypt")
-const { generateToken } = require("../middleware/atuhentication")
+const { generateToken } = require("../middleware/authentication")
 
 const usergetall = async(req, res) => {
     await User.findAll().then(result => {
@@ -18,26 +18,34 @@ const usergetall = async(req, res) => {
 
 const userRegister = async(req, res) => {
     const { full_name, email, gender, password } = req.body;
-    await User.create({
-        full_name,
-        email,
-        password,
-        gender,
-        role: "customer",
-    }).then(result => {
-        res.status(201).json({
-            id: result.id,
-            full_name: result.full_name,
-            email: result.email,
-            gender: result.gender,
-            balance: `Rp. ${result.balance}`,
-            createdAt: result.createdAt
-        })
-    }).catch(error => {
-        console.log(error);
-        res.status(503).json({
-            message: "INTERNAL SERVER ERROR",
-            error: error.message
+
+    await User.findOne({ where: { email } }).then(users => {
+        if (users) {
+            return res.status(400).json({
+                msg: "Email address already in use. Try another one!"
+            })
+        }
+        return User.create({
+            full_name,
+            email,
+            password,
+            gender,
+            role: "customer",
+        }).then(result => {
+            res.status(201).json({
+                id: result.id,
+                full_name: result.full_name,
+                email: result.email,
+                gender: result.gender,
+                balance: `Rp. ${result.balance}`,
+                createdAt: result.createdAt
+            })
+        }).catch(error => {
+            console.log(error);
+            res.status(503).json({
+                message: "INTERNAL SERVER ERROR",
+                error: error.message
+            })
         })
     })
 }
@@ -113,10 +121,8 @@ const userTopUp = async(req, res) => {
             returning: true
         }).then(result => {
             const money = result[1][0].balance;
-            const format = Intl.NumberFormat(money, 2)
             res.status(200).json({
                 message: `Your balance  has been succesfully update to  Rp. ${money}`,
-                format: format
             })
         }).catch(error => {
             console.log(error);
