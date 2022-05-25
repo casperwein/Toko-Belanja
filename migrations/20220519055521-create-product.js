@@ -30,7 +30,7 @@ module.exports = {
             }
         }).then(() => queryInterface.addConstraint("products", {
             fields: ["CategoryId"],
-            type: "unique",
+            type: "foreign key",
             name: "category_fk",
             references: {
                 table: "categories",

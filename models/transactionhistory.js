@@ -1,16 +1,14 @@
 'use strict';
-const {
-    Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class transactionhistory extends Model {
         static associate(models) {
             this.belongsTo(models.product, {
-                as: "products",
+                as: "Products",
                 foreignKey: "ProductId",
             });
             this.belongsTo(models.user, {
-                as: "users",
+                as: "Users",
                 foreignKey: "UserId",
             });
         }

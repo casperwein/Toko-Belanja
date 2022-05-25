@@ -11,6 +11,7 @@ const verify = (req, res, next) => {
         }
         req.id = decoded.id;
         req.role = decoded.role;
+        req.balance = decoded.balance;
         next();
     });
 };

@@ -4,8 +4,9 @@ module.exports = {
         await queryInterface.createTable('categories', {
                 id: {
                     allowNull: false,
+                    autoIncrement: true,
                     primaryKey: true,
-                    type: Sequelize.INTEGER
+                    type: Sequelize.INTEGER,
                 },
                 type: {
                     type: Sequelize.STRING
@@ -22,19 +23,19 @@ module.exports = {
                     type: Sequelize.DATE
                 }
             })
-            .then(() =>
-                queryInterface.addConstraint("categories", {
-                    fields: ["id"],
-                    type: "foreign key",
-                    name: "user_fk",
-                    references: {
-                        table: "users",
-                        field: "id",
-                    },
-                    onDelete: "cascade",
-                    onUpdate: "cascade",
-                })
-            );
+            // .then(() =>
+            //     queryInterface.addConstraint("categories", {
+            //         fields: ["id"],
+            //         type: "foreign key",
+            //         name: "user_fk",
+            //         references: {
+            //             table: "users",
+            //             field: "id",
+            //         },
+            //         onDelete: "cascade",
+            //         onUpdate: "cascade",
+            //     })
+            // );
     },
     async down(queryInterface, Sequelize) {
         await queryInterface.dropTable('categories');

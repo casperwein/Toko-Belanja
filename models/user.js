@@ -1,14 +1,14 @@
 "use strict";
 
 const { Model } = require("sequelize");
-const { hashPassword } = require("../helpers/bcrypt")
+const { hashPassword } = require("../helpers/bcrypt");
 module.exports = (sequelize, DataTypes) => {
     class user extends Model {
         static associate(models) {
-            this.hasMany(models.category, {
-                as: "user",
-                foreignKey: "id",
-            });
+            // this.hasMany(models.category, {
+            //     as: "user",
+            //     foreignKey: "userId",
+            // });
             this.hasMany(models.transactionhistory, {
                 as: "users",
                 foreignKey: "UserId",
