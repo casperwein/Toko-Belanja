@@ -1,14 +1,18 @@
 const express = require('express')
-const userRouter = require("./routes/user")
-const categoriesRouter = require("./routes/categories")
+const user = require("./routes/user")
+const categories = require("./routes/categories")
+const products = require("./routes/products")
+const transactions = require("./routes/transactions-history")
+
 const app = express()
-const port = 3000
+const port = process.env.DB_PORT || 3000
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use("/users", userRouter)
-app.use("/categories", categoriesRouter)
-
+app.use("/users", user)
+app.use("/categories", categories)
+app.use("/products", products)
+app.use("/transactions", transactions)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

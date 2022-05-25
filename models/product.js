@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     class product extends Model {
         static associate(models) {
             this.belongsTo(models.category, {
-                as: "categories",
+                as: "Categories",
                 foreignKey: "CategoryId",
             });
             this.hasMany(models.transactionhistory, {
-                as: "products",
+                as: "TransactionHistories",
                 foreignKey: "ProductId",
             });
         }
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
                     msg: "stock must be integer"
                 },
                 min: {
-                    args: [0],
+                    args: [5],
                     msg: "Minimum 0",
                 },
             }
