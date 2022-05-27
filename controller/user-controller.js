@@ -99,31 +99,23 @@ const userTopUp = async(req, res) => {
         if (!user) {
             return res.status(400).json({ message: "email not found!!" })
         }
-        const current_balance = user.balance + balance;
-        return User.update({ balance: current_balance }, {
-            where: { id: user_id },
-            returning: true
-        }).then(result => {
-            const money = result[1][0].balance;
-            return res.status(200).json({
-                message: `Your balance has been succesfully update to  Rp. ${money}`,
-            })
-        }).catch(error => {
-            res.status(500).json({ message: "INTERNAL SERVER ERROR", error });
+        user.balance = user.balance + balance;
+        user.save();
+        return res.status(200).json({
+            message: `Your balance has been succesfully update to  Rp. ${user.balance}`,
         })
     }).catch(error => {
-        res.status(500).json({ message: "INTERNAL SERVER ERROR", error });
+        res.status(500).json({ message: "INTERNAL SERVER ERROR", error: error.message });
     })
 }
 
 const userDelete = async(req, res) => {
     const userId = req.params.userId;
-    await User.destroy({ where: { id: userId } })
-        .then(() => {
-            res.status(200).json({ msg: "Your account  has been successfully deleted" });
-        }).catch(error => {
-            res.status(500).json({ message: "INTERNAL SERVER ERROR", error });
-        });
+    await User.destroy({ where: { id: userId } }).then(() => {
+        res.status(200).json({ msg: "Your account  has been successfully deleted" });
+    }).catch(error => {
+        res.status(500).json({ message: "INTERNAL SERVER ERROR", error });
+    });
 }
 
 module.exports = {

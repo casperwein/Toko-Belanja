@@ -9,7 +9,7 @@ const getAll = async(req, res) => {
     }).then(categories => {
         res.status(200).json({ categories: categories })
     }).catch(error => {
-        res.status(503).json({ message: "INTERNAL SERVER ERROR", error });
+        res.status(503).json({ message: "INTERNAL SERVER ERROR", error: error.message });
     });
 }
 
