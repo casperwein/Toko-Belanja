@@ -37,7 +37,17 @@ const updateProducts = async(req, res) => {
     const data = { price, stock, title } = req.body;
     await Product.update(data, { where: { id: productId }, returning: true })
         .then(result => {
-            res.status(200).json({ result })
+            res.status(200).json({
+                product: {
+                    id: result[1][0].id,
+                    title: result[1][0].title,
+                    price: `Rp. ${result[1][0].price}`,
+                    stock: result[1][0].stock,
+                    CategoryId: result[1][0].CategoryId,
+                    createdAt: result[1][0].createdAt,
+                    updatedAt: result[1][0].updatedAt
+                }
+            })
         }).catch(error => {
             res.status(500).json({ msg: "INTERNAL SERVER ERROR", error })
         })
@@ -52,7 +62,17 @@ const updateCategoryId = async(req, res) => {
             return res.status(400).json({ message: `Category with id ${CategoryId}  doesn't exist` });
         }
         Product.update({ CategoryId }, { where: { id: productId }, returning: true }).then(result => {
-            res.status(200).json({ product: result[1][0] })
+            res.status(200).json({
+                product: {
+                    id: result[1][0].id,
+                    title: result[1][0].title,
+                    price: `Rp. ${result[1][0].price}`,
+                    stock: result[1][0].stock,
+                    CategoryId: result[1][0].CategoryId,
+                    createdAt: result[1][0].createdAt,
+                    updatedAt: result[1][0].updatedAt
+                }
+            })
         }).catch(error => { res.status(500).json({ msg: "INTERNAL SERVER ERROR", error }) })
     }).catch(error => { res.status(500).json({ msg: "INTERNAL SERVER ERROR", error }) })
 }

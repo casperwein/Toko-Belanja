@@ -1,6 +1,6 @@
 const categoryController = require("../controller/category-contoller");
 const httpMocks = require("node-mocks-http");
-const Category = require("../models/index").category
+const Category = require("../models/index").category;
 
 jest.mock("../models");
 jest.mock("../middleware/authentication");
@@ -51,7 +51,7 @@ describe("Category Controller", () => {
 
     it("update Category should return 500 ", async() => {
         const rejected = Promise.reject({ message: "error" });
-        Category.update.mockResolvedValue(rejected)
+        Category.update.mockResolvedValue(rejected);
         await categoryController.updateCategories(req, res);
         expect(res.statusCode).toBe(500);
     });

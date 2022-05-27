@@ -22,7 +22,7 @@ const findIdProduct = (req, res, next) => {
     })
 }
 
-const findIdProductBody = (req, res, next) => {
+const findIdProductTransaction = (req, res, next) => {
     const productId = req.body.productId;
     Product.findOne({ where: { id: productId } }).then(result => {
         if (!result) {
@@ -32,6 +32,7 @@ const findIdProductBody = (req, res, next) => {
         };
     })
 }
+
 
 const checkStock = (req, res, next) => {
     const quantityBeli = req.body.quantityBeli;
@@ -49,5 +50,5 @@ module.exports = {
     findIdCategory,
     checkStock,
     findIdProduct,
-    findIdProductBody
+    findIdProductTransaction
 }

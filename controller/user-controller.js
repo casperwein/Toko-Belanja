@@ -105,7 +105,7 @@ const userTopUp = async(req, res) => {
             returning: true
         }).then(result => {
             const money = result[1][0].balance;
-            res.status(200).json({
+            return res.status(200).json({
                 message: `Your balance has been succesfully update to  Rp. ${money}`,
             })
         }).catch(error => {

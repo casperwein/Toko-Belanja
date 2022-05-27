@@ -1,5 +1,5 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
     class product extends Model {
         static associate(models) {
@@ -19,20 +19,20 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: "title is required"
+                    msg: "title is required",
                 },
-            }
+            },
         },
         price: {
             type: DataTypes.INTEGER,
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: "price is required"
+                    msg: "price is required",
                 },
                 isInt: {
                     args: true,
-                    msg: "price must be integer"
+                    msg: "price must be integer",
                 },
                 max: {
                     args: [50000000],
@@ -42,29 +42,29 @@ module.exports = (sequelize, DataTypes) => {
                     args: [0],
                     msg: "Minimum 0",
                 },
-            }
+            },
         },
         stock: {
             type: DataTypes.INTEGER,
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: "stock is required"
+                    msg: "stock is required",
                 },
                 isInt: {
                     args: true,
-                    msg: "stock must be integer"
+                    msg: "stock must be integer",
                 },
                 min: {
                     args: [5],
                     msg: "Minimum 0",
                 },
-            }
+            },
         },
-        CategoryId: DataTypes.INTEGER
+        CategoryId: DataTypes.INTEGER,
     }, {
         sequelize,
-        modelName: 'product',
+        modelName: "product",
     });
     return product;
 };

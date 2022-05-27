@@ -30,7 +30,7 @@ describe("userController findAll", () => {
     });
 });
 
-describe('User Controller register', () => {
+describe("User Controller register", () => {
     it("user register should return 400 ", async() => {
         const email = "email@gmail.com";
         User.findOne.mockResolvedValue({ rows: [email] });
@@ -59,7 +59,7 @@ describe('User Controller register', () => {
         await userController.userRegister(req, res);
         expect(res.statusCode).toBe(500);
     });
-})
+});
 
 describe("userController login", () => {
     beforeAll(() => {
@@ -98,7 +98,6 @@ describe("userController login", () => {
     });
 });
 
-
 describe("userController updateUser", () => {
     it("User update should return 200 updated", async() => {
         User.update.mockResolvedValue({ user: "user" });
@@ -114,20 +113,23 @@ describe("userController updateUser", () => {
     });
 });
 
-
-describe('userController userTopup', () => {
+describe("userController userTopup", () => {
     it("user top up should return 400 if id not found", async() => {
         User.findOne.mockResolvedValue(null);
         await userController.userTopUp(req, res);
         expect(res.statusCode).toBe(400);
     });
+
     it("user top up should return 200 ", async() => {
+        const balance = 200000;
         User.findOne.mockResolvedValue({ id: 1 });
-        User.update.mockResolvedValue();
+        User.update.mockResolvedValue({
+            rows: [{ balance }],
+            result: [{ balance }],
+        });
         await userController.userTopUp(req, res);
         expect(res.statusCode).toBe(200);
     });
-
 
     it("user top up should return 500", async() => {
         const rejected = Promise.reject({ message: "internal server error" });
@@ -143,9 +145,7 @@ describe('userController userTopup', () => {
         await userController.userTopUp(req, res);
         expect(res.statusCode).toBe(500);
     });
-
-})
-
+});
 
 describe("userController deleteUser", () => {
     it("user delete should return 200 deleted", async() => {
