@@ -19,26 +19,25 @@ const postTransaction = async(req, res) => {
             TransactionHostory.create({ ProductId, UserId, total_price, quantity, })
                 .then(() => {
                     const CategoryId = product.CategoryId
-                    const currentStock = product.stock - quantity
-                    const currentBalance = user.balance - total_price
-                    Product.update({ stock: currentStock }, { where: { id: ProductId } })
-                    User.update({ balance: currentBalance }, { where: { id: UserId } })
+                    product.stock = product.stock - quantity
+                    user.balance = user.balance - total_price
+                    product.save()
+                    user.save()
                     Category.findOne({ where: { id: CategoryId } }).then((category) => {
-                        const sold_product_amount = category.sold_product_amount + quantity
-                        Category.update({ sold_product_amount }, { where: { id: CategoryId } })
+                        category.sold_product_amount = category.sold_product_amount + quantity
+                        category.save()
                     }).catch()
                     res.status(201).json({
                         message: "You hace succesfully purchase the product",
                         transactionBil: { total_price: `Rp. ${total_price}`, quantity, product_name: product.title }
                     })
                 }).catch(error => {
-                    console.log(error), res.status(503).json({ message: "INTERNAL SERVER ERROR", error })
+                    res.status(503).json({ message: "INTERNAL SERVER ERROR", error })
                 });
         }).catch(error => {
-            console.log(error), res.status(503).json({ message: "INTERNAL SERVER ERROR", error })
+            res.status(503).json({ message: "INTERNAL SERVER ERROR", error })
         });
     }).catch(error => {
-        console.log(error)
         res.status(503).json({ message: "INTERNAL SERVER ERROR", error })
     });
 }
@@ -77,8 +76,6 @@ const getTransactionById = async(req, res) => {
         res.status(500).json({ message: "INTERNAL SERVER ERROR", error })
     });
 }
-
-
 
 const getAllByAdmin = async(req, res) => {
     await TransactionHostory.findAll({

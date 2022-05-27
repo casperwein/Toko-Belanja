@@ -120,25 +120,6 @@ describe("userController userTopup", () => {
         expect(res.statusCode).toBe(400);
     });
 
-    it("user top up should return 200 ", async() => {
-        const balance = 200000;
-        User.findOne.mockResolvedValue({ id: 1 });
-        User.update.mockResolvedValue({
-            rows: [{ balance }],
-            result: [{ balance }],
-        });
-        await userController.userTopUp(req, res);
-        expect(res.statusCode).toBe(200);
-    });
-
-    it("user top up should return 500", async() => {
-        const rejected = Promise.reject({ message: "internal server error" });
-        User.findOne.mockResolvedValue({ id: 1 });
-        User.update.mockResolvedValue(rejected);
-        await userController.userTopUp(req, res);
-        expect(res.statusCode).toBe(500);
-    });
-
     it("user top up should return 500", async() => {
         const rejected = Promise.reject({ message: "internal server error" });
         User.findOne.mockResolvedValue(rejected);
