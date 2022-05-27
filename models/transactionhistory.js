@@ -1,5 +1,5 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
     class transactionhistory extends Model {
         static associate(models) {
@@ -21,30 +21,30 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: "quantity is required"
+                    msg: "quantity is required",
                 },
                 isInt: {
                     args: true,
-                    msg: "quantity must be integer"
-                }
-            }
+                    msg: "quantity must be integer",
+                },
+            },
         },
         total_price: {
             type: DataTypes.INTEGER,
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: "total_price is required"
+                    msg: "total_price is required",
                 },
                 isInt: {
                     args: true,
-                    msg: "total_price must be integer"
-                }
-            }
-        }
+                    msg: "total_price must be integer",
+                },
+            },
+        },
     }, {
         sequelize,
-        modelName: 'transactionhistory',
+        modelName: "transactionhistory",
     });
     return transactionhistory;
 };

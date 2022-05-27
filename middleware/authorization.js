@@ -11,7 +11,7 @@ const userAuthorization = async(req, res, next) => {
         } else {
             res.status(401).json({
                 name: "authorization error",
-                devMessage: `User with  id ${user_id} does not have permission to acces User with id ${id}`,
+                devMessage: `User with  id ${user_id} does not have permission to acces User with id ${user.id}`,
             });
         };
     }).catch((error) => {

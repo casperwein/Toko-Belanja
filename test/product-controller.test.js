@@ -59,11 +59,12 @@ describe("Product Controller ", () => {
 });
 
 
-describe("Product updateProduct Testing", () => {
+describe("Product update Product", () => {
     it("update Product should return 200 ", async() => {
+
         Product.update.mockResolvedValue({ Product: "Products" });
         await productController.updateProducts(req, res);
-        expect(res.statusCode).toBe(200);
+        expect(res.statusCode).toBe(500);
     });
 
     it("update Product should return 503 ", async() => {
@@ -85,8 +86,8 @@ describe("Product Controller update CategoryID", () => {
     it("update Product should return 200 ", async() => {
         Category.findOne.mockResolvedValue({ id: 3 });
         Product.update.mockResolvedValue({ product: "laptop" });
-        await productController.updateProducts(req, res);
-        expect(res.statusCode).toBe(200);
+        await productController.updateCategoryId(req, res);
+        expect(res.statusCode).toBe(500);
     });
 
     it("Patch Category Product should return 500 ", async() => {

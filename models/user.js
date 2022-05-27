@@ -21,27 +21,27 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: "full_name is required"
+                    msg: "full_name is required",
                 },
-            }
+            },
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: {
                 args: true,
-                msg: 'Email address already in use. Try another one!'
+                msg: "Email address already in use. Try another one!",
             },
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: "Email is required"
+                    msg: "Email is required",
                 },
                 isEmail: {
                     args: true,
-                    msg: "email must be valid"
+                    msg: "email must be valid",
                 },
-            }
+            },
         },
         password: {
             type: DataTypes.STRING,
@@ -52,9 +52,9 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 notEmpty: {
                     args: true,
-                    msg: "Password is required"
+                    msg: "Password is required",
                 },
-            }
+            },
         },
         gender: {
             type: DataTypes.STRING,
@@ -68,9 +68,9 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 notEmpty: {
                     args: true,
-                    msg: "gender is required"
+                    msg: "gender is required",
                 },
-            }
+            },
         },
         role: {
             type: DataTypes.STRING,
@@ -85,10 +85,9 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 notEmpty: {
                     args: true,
-                    msg: "role is required"
+                    msg: "role is required",
                 },
-            }
-
+            },
         },
         balance: {
             type: DataTypes.INTEGER,
@@ -103,13 +102,13 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 notEmpty: {
                     args: true,
-                    msg: "balance is required"
+                    msg: "balance is required",
                 },
                 isInt: {
                     args: true,
-                    msg: "balance must be integer"
-                }
-            }
+                    msg: "balance must be integer",
+                },
+            },
         },
     }, {
         sequelize,
@@ -121,7 +120,7 @@ module.exports = (sequelize, DataTypes) => {
                 user.password = hashedPassword;
                 user.balance = userBalance;
             },
-        }
+        },
     });
     return user;
 };

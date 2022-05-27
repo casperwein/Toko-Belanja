@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const userController = require("../controller/user-controller");
 const authentication = require("../middleware/authentication").verify;
 const authorization = require("../middleware/authorization").userAuthorization;
@@ -12,5 +12,4 @@ router.put("/:userId", authorization, userController.userUpdate);
 router.delete("/:userId", authorization, userController.userDelete);
 router.patch("/topup", userController.userTopUp);
 
-
-module.exports = router
+module.exports = router;
