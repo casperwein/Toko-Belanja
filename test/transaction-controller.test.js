@@ -84,17 +84,19 @@ describe("Transaction controller post Transactions", () => {
         expect(res.statusCode).toBe(400);
     });
 
-    // it("Transaction post transaction should return 200", async() => {
-    //     const stockada = 1
-    //     const saldopas = 20000
-    //     Product.findOne.mockResolvedValue({ stockada });
-    //     User.findOne.mockResolvedValue({ saldopas });
-    //     TransactionHostory.create.mockResolvedValue({ transaction: "transaction" }, true);
-    //     Product.update.mockResolvedValue({ product: "product" }, true);
-    //     User.update.mockResolvedValue({ user: "user" }, true);
-    //     Category.findOne.mockResolvedValue({ id: 5 }, true);
-    //     Category.update.mockResolvedValue({ category: "category" }, true);
-    //     await transactionController.postTransaction(req, res);
-    //     expect(res.statusCode).toBe(200);
-    // });
+    it("Transaction Find By Id should return 500", async() => {
+        const rejected = Promise.reject({ message: "internal server error" });
+        TransactionHostory.findOne.mockResolvedValue(rejected);
+        User.findOne.mockResolvedValue(rejected);
+        await transactionController.postTransaction(req, res);
+        expect(res.statusCode).toBe(503);
+    });
+
+    it("Transaction Find By Id should return 500", async() => {
+        const rejected = Promise.reject({ message: "internal server error" });
+        TransactionHostory.findOne.mockResolvedValue(rejected);
+        await transactionController.postTransaction(req, res);
+        expect(res.statusCode).toBe(503);
+    });
+
 });

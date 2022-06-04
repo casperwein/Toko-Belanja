@@ -7,7 +7,7 @@ const generateToken = require("../middleware/authentication").generateToken;
 jest.mock("../models");
 jest.mock("../middleware/authentication");
 
-let req, res;
+let req, res
 
 beforeEach(() => {
     req = httpMocks.createRequest();
@@ -118,6 +118,17 @@ describe("userController userTopup", () => {
         User.findOne.mockResolvedValue(null);
         await userController.userTopUp(req, res);
         expect(res.statusCode).toBe(400);
+    });
+
+    it("User update should return 200 updated", async() => {
+        const user = {
+            balance: 30000
+        }
+        const balance = 100000
+        user.balance = user.balance + balance
+        User.findOne.mockResolvedValue({ rows: ["balance"] });
+        await userController.userTopUp(req, res);
+        expect(res.statusCode).toBe(500);
     });
 
     it("user top up should return 500", async() => {

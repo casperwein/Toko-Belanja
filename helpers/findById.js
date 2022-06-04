@@ -1,7 +1,7 @@
 const { category: Category, product: Product } = require("../models/index")
 
 const findIdCategory = (req, res, next) => {
-    const categoryId = req.params.categoryId || req.params.productId;
+    const categoryId = req.params.categoryId
     Category.findOne({ where: { id: categoryId } }).then(result => {
         if (!result) {
             res.status(400).json({ message: `Category with id ${categoryId}  doesn't exist` });
@@ -33,22 +33,8 @@ const findIdProductTransaction = (req, res, next) => {
     })
 }
 
-
-const checkStock = (req, res, next) => {
-    const quantityBeli = req.body.quantityBeli;
-    const productId = req.params.productId
-    Product.findOne({ where: { id: productId } }).then(product => {
-        if (product.price >= quantityBeli) {
-            next();
-        } else {
-            res.status(400).json("stoknya nggk banyak, kurangi ekpektasi anda qkqkqkqk")
-        }
-    })
-}
-
 module.exports = {
     findIdCategory,
-    checkStock,
     findIdProduct,
     findIdProductTransaction
 }
