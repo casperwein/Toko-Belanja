@@ -33,8 +33,29 @@ const findIdProductTransaction = (req, res, next) => {
     })
 }
 
+const checkProductBeforeDelete = async(req, res, next) => {
+    const categoryId = req.params.categoryId
+    await Product.findOne({ where: { CategoryId: categoryId } })
+        .then(product => {
+            if (product) {
+                res.status(400).json({
+                    message: "You can't delete a category that contains a product. please delete the product first"
+                })
+            } else {
+                next()
+            }
+        })
+        .catch(error => {
+            res.status(503).json({
+                message: "INTERNAL SERVER ERROR",
+                error: error.message
+            })
+        })
+}
+
 module.exports = {
     findIdCategory,
     findIdProduct,
-    findIdProductTransaction
+    findIdProductTransaction,
+    checkProductBeforeDelete
 }
